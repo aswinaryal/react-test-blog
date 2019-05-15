@@ -10,8 +10,8 @@ export default function Header(){
             <div className="row">
                 <div className="col-lg-8 col-md-10 mx-auto">
                 <div className="site-heading">
-                    <h1>Clean Blog</h1>
-                    <span className="subheading">A Blog Theme by Start Bootstrap</span>
+                    <h1>Simple Blog</h1>
+                    <span className="subheading">A Blog by Ajay Dhakal</span>
                 </div>
                 </div>
             </div>
