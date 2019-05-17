@@ -1,23 +1,40 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-function Post(props){
+class Post extends React.Component{
+    // console.log(props);
+    constructor(){
+        super();
 
-    function handleClick(event){
-        const postid = parseInt(event.target.getAttribute("postid"));
-         props.spost(postid);
+        this.showPost = this.showPost.bind(this)
     }
 
-    console.log(props)
-    return(
-        <>{props.posts.map(function(post){
-            return  <div key = {post.id} >
-                        <Link to = "/post" ><label><h3 onClick = {handleClick}  postid = {post.id} >{post.title}</h3></label></Link>
-                        <p>{post.body.substring(0,350)}....</p>
-                    </div>
-            })
-        }</>
-    );
+    
+     showPost = ()=>{
+        console.log(123);
+    }
+
+    render(){
+        return(
+                  <div>
+                {this.props.posts.map(function(post){
+                    return <div key = {post.id}>
+                            <Link to = "/post" >
+                                <h3 
+                                
+                                  post_id = {post.id} >
+                                  {post.title}
+                                </h3>
+                            </Link>
+                            <p>{post.body.substring(250)}.....</p> 
+                           
+                           </div> 
+                })}
+            </div>
+        );
+    }
+
 }
+
 
 export default Post;

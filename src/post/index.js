@@ -1,20 +1,8 @@
-import React,{lazy,Suspense} from 'react';
+import React from 'react';
 import {Switch,Route} from 'react-router-dom';
 import Axios from 'axios';
-import ShowPost from './showpost';
-// import Post from './post';
-const Post = lazy(()=>import('./post'));
-// const Post = lazy(function(){
-//     return import('./post');
-// })
+import Post from './post';
 
-// const routes = [
-//    {
-//     component : Post,
-//     path : "/post",
-//     exact: true
-//    }
-// ];
 
 
 class Index extends React.Component{
@@ -22,41 +10,54 @@ class Index extends React.Component{
         super(props);
         this.state = {
             posts : [],
+            comments: [],
+            post: {}
         }
+        this.btnClick = this.btnClick.bind(this);
+        this.getPost = this.getPost.bind(this);
     }
 
 
     componentWillMount(){
-        Axios.get('http://127.0.0.1:8000/api/post')
+        Axios.get('https://react-blogbackend.herokuapp.com/api/post')
         .then(function(response){
             this.setState({
                 posts: response.data,
-            },function(){
-                // console.log(this.state.posts)//for getting immediate access to this.state.whateveryouwannaget
-                // this.state.posts.find(function(post){
-                //     return //no idea how to call componentWM without rerequest
-                // })
-            })
+            },function(){})
         }.bind(this))
     };
 
+
+    btnClick(){
+        console.log(12);
+    }
+
     getPost(id){
-        console.log(id)//we will continue tommorow
+        // console.log(id)//will continue tommorow
+        const postid = parseInt(id);
+        const post = this.state.posts.find(function(post){
+            return post.id === postid;
+        })
+        const post_comment = post.comment.map(function(comment){
+            return comment;
+        })
+        
+        this.setState({
+            post: {post},
+            comments: [post_comment]
+        },function(){
+            console.log(this.state.comments)
+        })
+        
         console.log("heyhey");
     }
 
     render(){
         return(
             <div>
-                <Suspense fallback = {<div>loading.....</div>} >
                 <Switch>
-                    <Route path = "/" exact render = {(props)=><Post posts = {this.state.posts} spost = {this.getPost} /> } />
-                    <Route path = "/post" render = {function(props){
-                        return <ShowPost post = {this.state.post} />
-                    }} />
+                    <Route path = "/" exact render = {(props)=><Post posts = {this.state.posts} spost = {this.getPost.bind(this)} /> } />
                 </Switch>
-                   {/* <Post post = {this.state.posts} /> */}
-                </Suspense>
             </div>
         );
     }

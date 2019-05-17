@@ -1,9 +1,9 @@
 import React from 'react';
 
 function ShowPost(props){
-    console.log(props);
+   
     return(
-        <></>
+        <>why am i hiding</>
     );
 }
 
