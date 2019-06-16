@@ -1,62 +1,61 @@
 import React from 'react';
-import {Switch,Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Axios from 'axios';
 import Post from './post';
 
 
 
-class Index extends React.Component{
-    constructor(props){
+class Index extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
-            posts : [],
+            posts: [],
             comments: [],
             post: {}
         }
-        this.btnClick = this.btnClick.bind(this);
-        this.getPost = this.getPost.bind(this);
+        // this.btnClick = this.btnClick.bind(this);
+        // this.getPost = this.getPost.bind(this);
     }
 
 
-    componentWillMount(){
+    componentWillMount() {
         Axios.get('https://react-blogbackend.herokuapp.com/api/post')
-        .then(function(response){
-            this.setState({
-                posts: response.data,
-            },function(){})
-        }.bind(this))
+            .then(response => {
+                console.log('response', response.data)
+                return this.setState({ posts: response.data })
+            })
+            .catch(err => console.log(err))
     };
 
+    componentWillUnmount() {
 
-    btnClick(){
-        console.log(12);
     }
 
-    getPost(id){
-        // console.log(id)//will continue tommorow
-        const postid = parseInt(id);
-        const post = this.state.posts.find(function(post){
-            return post.id === postid;
-        })
-        const post_comment = post.comment.map(function(comment){
-            return comment;
-        })
-        
-        this.setState({
-            post: {post},
-            comments: [post_comment]
-        },function(){
-            console.log(this.state.comments)
-        })
-        
-        console.log("heyhey");
-    }
+    // getPost(id) {
+    //     // console.log(id)//will continue tommorow
+    //     const postid = parseInt(id);
+    //     console.log('post id => ', postid);
+    //     const post = this.state.posts.find(function (post) {
+    //         return post.id === postid;
+    //     })
 
-    render(){
-        return(
+    //     const post_comment = post.comment.map(function (comment) {
+    //         return comment;
+    //     })
+
+    //     this.setState({
+    //         post: { post },
+    //         comments: [post_comment]
+    //     });
+
+    //     console.log("heyhey");
+    // }
+
+    render() {
+        return (
             <div>
                 <Switch>
-                    <Route path = "/" exact render = {(props)=><Post posts = {this.state.posts} spost = {this.getPost.bind(this)} /> } />
+                    <Route path="/" exact render={(props) => <Post posts={this.state.posts} />}></Route>
                 </Switch>
             </div>
         );
